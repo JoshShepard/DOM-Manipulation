@@ -1,4 +1,5 @@
-// The keys and notes variables store the piano keys
+// The keys and notes variables store the piano keys 
+// keys array is a list of id's for actual elements on the HTML page - Loop through keys to grab the actual element and store it in notes
 const keys = ['c-key', 'd-key', 'e-key', 'f-key', 'g-key', 'a-key', 'b-key', 'high-c-key', 'c-sharp-key', 'd-sharp-key', 'f-sharp-key', 'g-sharp-key', 'a-sharp-key'];
 const notes = [];
 keys.forEach(function(key){
@@ -6,21 +7,25 @@ keys.forEach(function(key){
 })
 
 // Write named functions that change the color of the keys below
-const keyPlay = function(event) {
+// using the event object to get the target element and changing the style
+function keyPlay(event) {
     event.target.style.backgroundColor = 'teal';
 }
-
-const keyReturn = function(event) {
+function keyReturn(event) {
     event.target.style.backgroundColor = '';   
 }
 
 // Write a named function with event handler properties
-let eventActive = function(note) {
+// used for looping through notes array and giving the note functionality by user interaction
+let eventActive = note => {
     note.onmousedown = keyPlay;
     note.onmouseup = keyReturn;
 }
 
 // Write a loop that runs the array elements through the function
+notes.forEach(note => {
+  eventActive(note);
+})
 
 
 // These variables store the buttons that progress the user through the lyrics
@@ -38,13 +43,52 @@ nextThree.hidden = true;
 startOver.hidden= true;
 
 // Write anonymous event handler property and function for the first progress button
+// shows next line button and hides first button, changes the notes on second page
+nextOne.onclick = function() {
+  nextTwo.hidden = false;
+  nextOne.hidden = true;
 
+  document.getElementById('letter-note-five').innerHTML = 'D';
+  document.getElementById('letter-note-six').innerHTML = 'C'
+}
 
 // Write anonymous event handler property and function for the second progress button
+// shows next button and hides previous, changes lyrics and notes
+nextTwo.onclick = function() {
+  nextThree.hidden = false;
+  nextTwo.hidden = true;
+  document.getElementById('word-five').innerHTML = 'DEAR';
+  document.getElementById('word-six').innerHTML = 'FRI-';
+  lastLyric.style.display = 'inline-block';
+  document.getElementById('letter-note-three').innerHTML = 'G';
+  document.getElementById('letter-note-four').innerHTML = 'E';
+  document.getElementById('letter-note-five').innerHTML = 'C';
+  document.getElementById('letter-note-six').innerHTML = 'B';
+}
 
 
 // Write anonymous event handler property and function for the third progress button
+// shows next button and hides previous, changes lyrics and notes
+nextThree.onclick = function() {
+  startOver.hidden = false;
+  nextThree.hidden = true;
+  // Changing lyrics
+  document.getElementById('word-one').innerHTML = 'HAP-';
+  document.getElementById('word-two').innerHTML = 'PY';
+  document.getElementById('word-three').innerHTML = 'BIRTH';
+  document.getElementById('word-four').innerHTML = 'DAY';
+  document.getElementById('word-five').innerHTML = 'TO';
+  document.getElementById('word-six').innerHTML = 'YOU!';
 
+  // Changing notes
+  document.getElementById('letter-note-one').innerHTML = 'F';
+  document.getElementById('letter-note-two').innerHTML = 'F';
+  document.getElementById('letter-note-three').innerHTML = 'E';
+  document.getElementById('letter-note-four').innerHTML = 'C';
+  document.getElementById('letter-note-five').innerHTML = 'D';
+  document.getElementById('letter-note-six').innerHTML = 'C';
+  lastLyric.style.display = 'none';
+}
 
 // This is the event handler property and function for the startOver button
 startOver.onclick = function() {
